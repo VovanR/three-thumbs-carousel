@@ -27,7 +27,7 @@ define([
         this._$carousel = null;
         this._$dots = null;
 
-        this._init()
+        this._init();
     };
 
     ThreeThumbsCarousel.prototype = {
