@@ -9,9 +9,9 @@
 ### Block structure
 ```jade
 .carousel.js-carousel
-    .previews.js-previews
-        span.preview.js-preview
-            span.preview__thumb.js-preview__thumb
+    .carousel__previews.js-carousel__previews
+        span.carousel__preview.js-carousel__preview
+            span.carousel__thumb.js-carousel__thumb
     .carousel__dots.js-carousel__dots
         span.carousel__dot.js-carousel__dot
 ```

@@ -40,7 +40,7 @@ define([
             console.info('RoutesThumbsCarousel init');
 
             this._$block.data('three-thumbs-carousel', this);
-            this._$carousel = this._$block.find('.js-previews');
+            this._$carousel = this._$block.find('.js-carousel__previews');
             this._$dots = this._$block.find('.js-carousel__dots');
 
             this.update();
@@ -64,9 +64,9 @@ define([
         _bindThumbs: function () {
             var _this = this;
 
-            this._$carousel.on('click.threeThumbsCarousel', '.js-preview__thumb', function () {
+            this._$carousel.on('click.threeThumbsCarousel', '.js-carousel__thumb', function () {
                 var $this = $(this);
-                var $preview = $this.closest('.js-preview');
+                var $preview = $this.closest('.js-carousel__preview');
                 var index = $preview.index();
                 _this.switchThumb(index);
             });
@@ -118,7 +118,7 @@ define([
          * @private
          */
         _selectThumb: function (index) {
-            var $previews = this._$carousel.find('.js-preview');
+            var $previews = this._$carousel.find('.js-carousel__preview');
 
             if ($previews.length > 0) {
                 $previews.removeClass('_state_current');
@@ -145,7 +145,7 @@ define([
             var margin;
             var width;
             var $carousel = this._$carousel;
-            var $previews = $carousel.find('.js-preview');
+            var $previews = $carousel.find('.js-carousel__preview');
             var previewsLength = $previews.length;
 
             if (
@@ -178,7 +178,7 @@ define([
          * @public
          */
         update: function () {
-            var $previews = this._$carousel.find('.js-preview');
+            var $previews = this._$carousel.find('.js-carousel__preview');
             var previewsLength = $previews.length;
 
             this._buildDots(previewsLength);

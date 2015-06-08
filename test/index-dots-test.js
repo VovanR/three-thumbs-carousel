@@ -32,7 +32,7 @@ requirejs([
             if (_.isNumber(previewsLength) && previewsLength > 0) {
                 _.times(previewsLength, function (pk) {
                     $fixtures.find('.js-carousel__dots').append(_.template($('#dot-template').html()));
-                    $fixtures.find('.js-previews').append(_.template($('#preview-template').html()));
+                    $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html()));
                 });
             }
 
@@ -108,7 +108,7 @@ requirejs([
                 assert.equal($fixtures.find('.js-carousel__dot').length, 5);
                 m.update();
                 assert.equal($fixtures.find('.js-carousel__dot').length, 5);
-                $fixtures.find('.js-previews').append(_.template($('#preview-template').html()));
+                $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html()));
                 m.update();
                 assert.equal($fixtures.find('.js-carousel__dot').length, 6);
             });

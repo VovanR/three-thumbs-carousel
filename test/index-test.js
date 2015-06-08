@@ -29,9 +29,13 @@ requirejs([
                 o
             );
 
+            var template;
             if (_.isNumber(previewsLength) && previewsLength > 0) {
+                template = _.template($('#preview-template').html());
                 _.times(previewsLength, function (pk) {
-                    $fixtures.find('.js-previews').append(_.template($('#preview-template').html())({pk: pk}));
+                    $fixtures.find('.js-carousel__previews').append(template({
+                        pk: pk,
+                    }));
                 });
             }
 
@@ -73,7 +77,7 @@ requirejs([
             it('should have `_$carousel`', function () {
                 var m = module();
                 assert.isDefined(m._$carousel[0]);
-                assert.isTrue(m._$carousel.hasClass('previews'));
+                assert.isTrue(m._$carousel.hasClass('carousel__previews'));
             });
         });
 
@@ -81,8 +85,8 @@ requirejs([
             it('should bind click on thumbs', function () {
                 var m = module({}, 5);
                 sinon.spy(m, 'switchThumb');
-                var $previews = $('#fixtures').find('.js-preview');
-                $($previews[3]).find('.js-preview__thumb').trigger('click');
+                var $previews = $('#fixtures').find('.js-carousel__preview');
+                $($previews[3]).find('.js-carousel__thumb').trigger('click');
                 assert.isTrue(m.switchThumb.calledOnce);
                 assert.equal(m.switchThumb.getCall(0).args[0], 3);
             });
@@ -116,15 +120,15 @@ requirejs([
             it('should select thumb with `index` from attribute', function () {
                 var m = module({}, 2);
                 m.switchThumb(1);
-                var $el = $(m._$carousel.find('.js-preview')[1]);
+                var $el = $(m._$carousel.find('.js-carousel__preview')[1]);
                 assert.isTrue($el.hasClass('_state_current'));
             });
 
             it('should deselect other thumbs', function () {
                 var m = module({}, 2);
-                m._$carousel.find('.js-preview').addClass('_state_current');
+                m._$carousel.find('.js-carousel__preview').addClass('_state_current');
                 m.switchThumb(1);
-                var $el = m._$carousel.find('.js-preview._state_current');
+                var $el = m._$carousel.find('.js-carousel__preview._state_current');
                 assert.equal($el.length, 1);
             });
 
@@ -155,7 +159,7 @@ requirejs([
                 var m = module({}, 1);
                 var $fixtures = $('#fixtures');
                 assert.equal(m._$carousel.css('margin-left'), '0px');
-                $fixtures.find('.js-previews').append(_.template($('#preview-template').html())({pk: 1}));
+                $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html())({pk: 1}));
                 m._moveThumbs(1);
                 assert.equal(m._$carousel.css('margin-left'), '0px');
             });
@@ -172,9 +176,9 @@ requirejs([
             it('should select first item if previous selected has been removed', function () {
                 var m = module();
                 var $fixtures = $('#fixtures');
-                $fixtures.find('.js-previews').append(_.template($('#preview-template').html())({pk: 0}));
+                $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html())({pk: 0}));
                 m.update();
-                assert.equal($fixtures.find('.js-preview._state_current').length, 1);
+                assert.equal($fixtures.find('.js-carousel__preview._state_current').length, 1);
             });
         });
 
@@ -192,7 +196,7 @@ requirejs([
 
             it('should reset carousel margin', function () {
                 var m = module({}, 5);
-                var $carousel = $('#fixtures .js-previews');
+                var $carousel = $('#fixtures .js-carousel__previews');
                 $carousel.css('margin-left', '-100500px');
                 assert.equal($carousel.css('margin-left'), '-100500px');
                 m.destroy();
@@ -201,27 +205,27 @@ requirejs([
 
             it('should reset carousel margin when items centered', function () {
                 var m = module({}, 2);
-                var $carousel = $('#fixtures .js-previews');
+                var $carousel = $('#fixtures .js-carousel__previews');
                 m.destroy();
                 assert.equal($carousel.css('margin-left'), '0px');
             });
 
             it('should select first thumb', function () {
                 var m = module({}, 5);
-                var $previews = $('#fixtures').find('.js-preview');
+                var $previews = $('#fixtures').find('.js-carousel__preview');
                 $previews.addClass('_state_current');
-                assert.equal($('#fixtures').find('.js-preview._state_current').length, 5);
+                assert.equal($('#fixtures').find('.js-carousel__preview._state_current').length, 5);
                 m.destroy();
-                assert.equal($('#fixtures').find('.js-preview._state_current').length, 1);
-                assert.isTrue($($('#fixtures').find('.js-preview')[0]).hasClass('_state_current'));
+                assert.equal($('#fixtures').find('.js-carousel__preview._state_current').length, 1);
+                assert.isTrue($($('#fixtures').find('.js-carousel__preview')[0]).hasClass('_state_current'));
             });
 
             it('should unbind click event', function () {
                 var m = module({}, 5);
                 m.destroy();
                 sinon.spy(m, 'switchThumb');
-                var $previews = $('#fixtures').find('.js-preview');
-                $($previews[3]).find('.js-preview__thumb').trigger('click');
+                var $previews = $('#fixtures').find('.js-carousel__preview');
+                $($previews[3]).find('.js-carousel__thumb').trigger('click');
                 assert.isFalse(m.switchThumb.called);
             });
         });
