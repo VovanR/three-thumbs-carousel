@@ -6,6 +6,8 @@
 
 ## Development
 
+![](preview.png)
+
 ### Block structure
 ```jade
 .carousel.js-carousel

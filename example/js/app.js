@@ -9,7 +9,7 @@ define([
     // nothing returns
 ], function (
     $,
-    Foo
+    ThreeThumbsCarousel
 ) {
 
     'use strict';
@@ -17,7 +17,9 @@ define([
     var App;
 
     App = function () {
-        this._initialize();
+        this._threeThumbsCarousel = null;
+
+        this._init();
     };
 
     App.prototype = {
@@ -26,10 +28,12 @@ define([
          *
          * @private
          */
-        _initialize: function () {
+        _init: function () {
             console.info('App init');
 
-            this.Foo = new Foo();
+            this._threeThumbsCarousel = new ThreeThumbsCarousel({
+                block: $('.js-carousel'),
+            });
         },
     };
 

@@ -90,17 +90,19 @@ define([
         _buildDots: function (count) {
             var $dots = this._$dots;
             var dotsLength = $dots.find('.js-carousel__dot').length;
+            if (dotsLength === count) {
+                return;
+            }
+
             var dots;
             var dotTemplate = '<span class="carousel__dot js-carousel__dot"></span>';
-            if (dotsLength !== count) {
-                this._$dots.empty();
-                dots = '';
-                var i = count;
-                while (i--) {
-                    dots += dotTemplate;
-                }
-                $dots.html(dots);
+            this._$dots.empty();
+            dots = '';
+            var i = count;
+            while (i--) {
+                dots += dotTemplate;
             }
+            $dots.html(dots);
         },
 
         /**
