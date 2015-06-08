@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>index-dots-test</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+
+<style>
+.b-carousel {
+    width: 206px;
+    box-shadow: 0 0 0 2px #6D6CD3;
+}
+
+.b-previews__dots {
+    text-align: center;
+}
+
+.b-previews__dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: pink;
+    box-shadow: inset 0 0 0 1px green;
+}
+
+.b-previews__dot._state_current {
+    background-color: lime;
+}
+</style>
+    </head>
+    <body>
+        <div id="mocha">
+            <p><a href=".">Index</a></p>
+        </div>
+
+        <div id="messages"></div>
+
+        <div id="fixtures"></div>
+
+        <div id="fixture-template" style="display: none">
+
+<div class="b-carousel js-carousel">
+    <div class="b-previews-scroller js-previews-scroller">
+        <div class="b-previews js-previews">
+        </div>
+    </div>
+    <div class="b-previews__dots js-previews__dots">
+    </div>
+</div>
+
+        </div>
+
+<script id="dot-template" type="javascript/template">
+<span class="b-previews__dot js-previews__dot"></span>
+</script>
+
+<script id="preview-template" type="javascript/template">
+<span class="
+    b-preview
+    b-preview_type_mine
+    js-preview">
+    <span class="b-preview__thumb js-preview__thumb"></span>
+</span>
+</script>
+
+        <script src="../node_modules/mocha/mocha.js"></script>
+        <script src="../node_modules/requirejs/require.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.js"></script>
+        <script>
+        requirejs.config.baseUrl = './';
+        requirejs(['../common'], function (common) {
+            requirejs(['./index-dots-test']);
+        });
+        </script>
+    </body>
+</html>
