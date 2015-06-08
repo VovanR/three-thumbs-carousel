@@ -73,7 +73,7 @@ requirejs([
             it('should have `_$carousel`', function () {
                 var m = module();
                 assert.isDefined(m._$carousel[0]);
-                assert.isTrue(m._$carousel.hasClass('b-previews'));
+                assert.isTrue(m._$carousel.hasClass('previews'));
             });
         });
 

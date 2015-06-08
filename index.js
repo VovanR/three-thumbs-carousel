@@ -91,7 +91,7 @@ define([
             var $dots = this._$dots;
             var dotsLength = $dots.find('.js-previews__dot').length;
             var dots;
-            var dotTemplate = '<span class="b-previews__dot js-previews__dot"></span>';
+            var dotTemplate = '<span class="previews__dot js-previews__dot"></span>';
             if (dotsLength !== count) {
                 this._$dots.empty();
                 dots = '';

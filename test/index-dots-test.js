@@ -56,7 +56,7 @@ requirejs([
             it('should have `_$dots`', function () {
                 var m = module();
                 assert.isDefined(m._$dots[0]);
-                assert.isTrue(m._$dots.hasClass('b-previews__dots'));
+                assert.isTrue(m._$dots.hasClass('previews__dots'));
             });
         });
 
@@ -64,11 +64,11 @@ requirejs([
             it('should build dots blocks', function () {
                 var m = module();
                 var $fixtures = $('#fixtures');
-                assert.equal($fixtures.find('.b-previews__dot').length, 0);
+                assert.equal($fixtures.find('.previews__dot').length, 0);
                 m._buildDots(5);
-                assert.equal($fixtures.find('.b-previews__dot').length, 5);
+                assert.equal($fixtures.find('.previews__dot').length, 5);
                 m._buildDots(3);
-                assert.equal($fixtures.find('.b-previews__dot').length, 3);
+                assert.equal($fixtures.find('.previews__dot').length, 3);
             });
         });
 

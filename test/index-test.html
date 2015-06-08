@@ -9,25 +9,25 @@
         <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
 
 <style>
-.b-carousel {
+.carousel {
     width: 206px;
     box-shadow: 0 0 0 2px #6D6CD3;
 }
 
-.b-previews-scroller {
+.previews-scroller {
     height: 54px;
     width: 204px;
     padding: 0 1px;
     background-color: gray;
 }
 
-.b-previews {
+.previews {
     height: 54px;
     white-space: nowrap;
     text-align: center;
 }
 
-.b-preview {
+.preview {
     display: inline-block;
     vertical-align: middle;
     white-space: normal;
@@ -42,11 +42,11 @@
     position: relative;
 }
 
-.b-preview._state_current {
+.preview._state_current {
     background-color: lime;
 }
 
-.b-preview__thumb {
+.preview__thumb {
     display: block;
     position: absolute;
     top: 0;
@@ -67,9 +67,9 @@
 
         <div id="fixture-template" style="display: none">
 
-<div class="b-carousel js-carousel">
-    <div class="b-previews-scroller js-previews-scroller">
-        <div class="b-previews js-previews">
+<div class="carousel js-carousel">
+    <div class="previews-scroller js-previews-scroller">
+        <div class="previews js-previews">
         </div>
     </div>
 </div>
@@ -78,10 +78,10 @@
 
 <script id="preview-template" type="javascript/template"><!--
 --><span data-point-pk="<%= pk %>" class="
-    b-preview
-    b-preview_type_mine
+    preview
+    preview_type_mine
     js-preview">
-    <span class="b-preview__thumb js-preview__thumb"></span>
+    <span class="preview__thumb js-preview__thumb"></span>
     <%= pk %>
 </span><!--
 --></script>
