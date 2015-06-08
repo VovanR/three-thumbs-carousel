@@ -41,7 +41,7 @@ define([
 
             this._$block.data('three-thumbs-carousel', this);
             this._$carousel = this._$block.find('.js-previews');
-            this._$dots = this._$block.find('.js-previews__dots');
+            this._$dots = this._$block.find('.js-carousel__dots');
 
             this.update();
 
@@ -78,7 +78,7 @@ define([
         _bindDots: function () {
             var _this = this;
 
-            this._$dots.on('click.threeThumbsCarousel', '.js-previews__dot', function () {
+            this._$dots.on('click.threeThumbsCarousel', '.js-carousel__dot', function () {
                 var index = $(this).index();
                 _this.switchThumb(index);
             });
@@ -89,9 +89,9 @@ define([
          */
         _buildDots: function (count) {
             var $dots = this._$dots;
-            var dotsLength = $dots.find('.js-previews__dot').length;
+            var dotsLength = $dots.find('.js-carousel__dot').length;
             var dots;
-            var dotTemplate = '<span class="previews__dot js-previews__dot"></span>';
+            var dotTemplate = '<span class="carousel__dot js-carousel__dot"></span>';
             if (dotsLength !== count) {
                 this._$dots.empty();
                 dots = '';
@@ -130,7 +130,7 @@ define([
          * @private
          */
         _selectDot: function (index) {
-            var $dots = this._$dots.find('.js-previews__dot');
+            var $dots = this._$dots.find('.js-carousel__dot');
 
             if ($dots.length > 0) {
                 $dots.removeClass('_state_current');

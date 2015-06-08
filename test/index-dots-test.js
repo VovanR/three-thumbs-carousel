@@ -31,7 +31,7 @@ requirejs([
 
             if (_.isNumber(previewsLength) && previewsLength > 0) {
                 _.times(previewsLength, function (pk) {
-                    $fixtures.find('.js-previews__dots').append(_.template($('#dot-template').html()));
+                    $fixtures.find('.js-carousel__dots').append(_.template($('#dot-template').html()));
                     $fixtures.find('.js-previews').append(_.template($('#preview-template').html()));
                 });
             }
@@ -56,7 +56,7 @@ requirejs([
             it('should have `_$dots`', function () {
                 var m = module();
                 assert.isDefined(m._$dots[0]);
-                assert.isTrue(m._$dots.hasClass('previews__dots'));
+                assert.isTrue(m._$dots.hasClass('carousel__dots'));
             });
         });
 
@@ -64,11 +64,11 @@ requirejs([
             it('should build dots blocks', function () {
                 var m = module();
                 var $fixtures = $('#fixtures');
-                assert.equal($fixtures.find('.previews__dot').length, 0);
+                assert.equal($fixtures.find('.carousel__dot').length, 0);
                 m._buildDots(5);
-                assert.equal($fixtures.find('.previews__dot').length, 5);
+                assert.equal($fixtures.find('.carousel__dot').length, 5);
                 m._buildDots(3);
-                assert.equal($fixtures.find('.previews__dot').length, 3);
+                assert.equal($fixtures.find('.carousel__dot').length, 3);
             });
         });
 
@@ -76,7 +76,7 @@ requirejs([
             it('should bind click on dots', function () {
                 var m = module({}, 5);
                 sinon.spy(m, 'switchThumb');
-                var $dots = $('#fixtures').find('.js-previews__dot');
+                var $dots = $('#fixtures').find('.js-carousel__dot');
                 $($dots[3]).trigger('click');
                 assert.isTrue(m.switchThumb.calledOnce);
                 assert.equal(m.switchThumb.getCall(0).args[0], 3);
@@ -97,20 +97,20 @@ requirejs([
             it('should select first dot if previous selected has been removed', function () {
                 var m = module({}, 5);
                 var $fixtures = $('#fixtures');
-                $fixtures.find('.js-previews__dots').append(_.template($('#dot-template').html()));
+                $fixtures.find('.js-carousel__dots').append(_.template($('#dot-template').html()));
                 m.update();
-                assert.equal($fixtures.find('.js-previews__dot._state_current').length, 1);
+                assert.equal($fixtures.find('.js-carousel__dot._state_current').length, 1);
             });
 
             it('should actualize dots count, equals thumbs count', function () {
                 var m = module({}, 5);
                 var $fixtures = $('#fixtures');
-                assert.equal($fixtures.find('.js-previews__dot').length, 5);
+                assert.equal($fixtures.find('.js-carousel__dot').length, 5);
                 m.update();
-                assert.equal($fixtures.find('.js-previews__dot').length, 5);
+                assert.equal($fixtures.find('.js-carousel__dot').length, 5);
                 $fixtures.find('.js-previews').append(_.template($('#preview-template').html()));
                 m.update();
-                assert.equal($fixtures.find('.js-previews__dot').length, 6);
+                assert.equal($fixtures.find('.js-carousel__dot').length, 6);
             });
         });
 
@@ -118,36 +118,36 @@ requirejs([
             it('should add `_state_current` class to selected dot', function () {
                 var m = module({}, 5);
                 var $fixtures = $('#fixtures');
-                $fixtures.find('.js-previews__dot').removeClass('_state_current');
+                $fixtures.find('.js-carousel__dot').removeClass('_state_current');
                 m._selectDot(3);
-                assert.isTrue($($fixtures.find('.js-previews__dot')[3]).hasClass('_state_current'));
+                assert.isTrue($($fixtures.find('.js-carousel__dot')[3]).hasClass('_state_current'));
             });
 
             it('should deselect other dots', function () {
                 var m = module({}, 5);
                 var $fixtures = $('#fixtures');
-                $fixtures.find('.js-previews__dot').addClass('_state_current');
+                $fixtures.find('.js-carousel__dot').addClass('_state_current');
                 m._selectDot(3);
-                assert.equal($fixtures.find('.js-previews__dot._state_current').length, 1);
+                assert.equal($fixtures.find('.js-carousel__dot._state_current').length, 1);
             });
         });
 
         describe('#destroy', function () {
             it('should select first dot', function () {
                 var m = module({}, 5);
-                var $previews = $('#fixtures').find('.js-previews__dot');
+                var $previews = $('#fixtures').find('.js-carousel__dot');
                 $previews.addClass('_state_current');
-                assert.equal($('#fixtures').find('.js-previews__dot._state_current').length, 5);
+                assert.equal($('#fixtures').find('.js-carousel__dot._state_current').length, 5);
                 m.destroy();
-                assert.equal($('#fixtures').find('.js-previews__dot._state_current').length, 1);
-                assert.isTrue($($('#fixtures').find('.js-previews__dot')[0]).hasClass('_state_current'));
+                assert.equal($('#fixtures').find('.js-carousel__dot._state_current').length, 1);
+                assert.isTrue($($('#fixtures').find('.js-carousel__dot')[0]).hasClass('_state_current'));
             });
 
             it('should unbind click event', function () {
                 var m = module({}, 5);
                 m.destroy();
                 sinon.spy(m, 'switchThumb');
-                var $dots = $('#fixtures').find('.js-previews__dot');
+                var $dots = $('#fixtures').find('.js-carousel__dot');
                 $($dots[3]).trigger('click');
                 assert.isFalse(m.switchThumb.called);
             });

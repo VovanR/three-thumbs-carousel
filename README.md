@@ -6,6 +6,16 @@
 
 ## Development
 
+### Block structure
+```jade
+.carousel.js-carousel
+    .previews.js-previews
+        span.preview.js-preview
+            span.preview__thumb.js-preview__thumb
+    .carousel__dots.js-carousel__dots
+        span.carousel__dot.js-carousel__dot
+```
+
 ### Initialize
 ```sh
 npm i
