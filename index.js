@@ -40,11 +40,13 @@ define([
         _init: function () {
             console.info('ThreeThumbsCarousel init');
 
-            this._$block.data('three-thumbs-carousel', this);
+            var $block = this._$block;
 
-            this._$image = this._$block.find('.js-carousel__image');
-            this._$carousel = this._$block.find('.js-carousel__thumbs');
-            this._$dots = this._$block.find('.js-carousel__dots');
+            $block.data('three-thumbs-carousel', this);
+
+            this._$image = $block.find('.js-carousel__image');
+            this._$carousel = $block.find('.js-carousel__thumbs');
+            this._$dots = $block.find('.js-carousel__dots');
 
             this.update();
 
@@ -100,10 +102,8 @@ define([
                 return;
             }
 
-            var dots;
+            var dots = '';
             var dotTemplate = '<span class="carousel__dot js-carousel__dot"></span>';
-            this._$dots.empty();
-            dots = '';
             var i = count;
             while (i--) {
                 dots += dotTemplate;
@@ -233,7 +233,7 @@ define([
             $carousel[0].style.marginLeft = 0;
 
             // Unbind click
-            this._$carousel.off('click.threeThumbsCarousel');
+            $carousel.off('click.threeThumbsCarousel');
             this._$dots.off('click.threeThumbsCarousel');
         },
     };
