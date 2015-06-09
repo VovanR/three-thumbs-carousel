@@ -15,13 +15,18 @@
     background-color: gray;
 }
 
-.carousel__previews {
+.carousel__image {
+    height: 100px;
+    background-color: green;
+}
+
+.carousel__thumbs {
     height: 54px;
     white-space: nowrap;
     text-align: center;
 }
 
-.carousel__preview {
+.carousel__item {
     display: inline-block;
     vertical-align: middle;
     white-space: normal;
@@ -36,7 +41,7 @@
     position: relative;
 }
 
-.carousel__preview._state_current {
+.carousel__item._state_current {
     background-color: lime;
 }
 
@@ -62,7 +67,8 @@
         <div id="fixture-template" style="display: none">
 
 <div class="carousel js-carousel">
-    <div class="carousel__previews js-carousel__previews">
+    <div class="carousel__image js-carousel__image"></div>
+    <div class="carousel__thumbs js-carousel__thumbs">
     </div>
 </div>
 
@@ -70,9 +76,9 @@
 
 <script id="preview-template" type="javascript/template"><!--
 --><span data-point-pk="<%= pk %>" class="
-    carousel__preview
-    js-carousel__preview">
-    <span class="carousel__thumb js-carousel__thumb"></span>
+    carousel__item
+    js-carousel__item">
+    <a class="carousel__thumb js-carousel__thumb" href="<%= pk %>.jpg"></a>
     <%= pk %>
 </span><!--
 --></script>

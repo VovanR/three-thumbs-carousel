@@ -16,14 +16,15 @@ define([
     var ThreeThumbsCarousel;
 
     /**
-     * @param {Object} [o] Options
-     * @param {jQuery} [o.block]
+     * @param {Object} o Options
+     * @param {jQuery} o.block
      * @constructor
      * @alias module:ThreeThumbsCarousel
      */
     ThreeThumbsCarousel = function (o) {
         this._$block = o.block;
 
+        this._$image = null;
         this._$carousel = null;
         this._$dots = null;
 
@@ -40,7 +41,9 @@ define([
             console.info('RoutesThumbsCarousel init');
 
             this._$block.data('three-thumbs-carousel', this);
-            this._$carousel = this._$block.find('.js-carousel__previews');
+
+            this._$image = this._$block.find('.js-carousel__image');
+            this._$carousel = this._$block.find('.js-carousel__thumbs');
             this._$dots = this._$block.find('.js-carousel__dots');
 
             this.update();
@@ -64,11 +67,13 @@ define([
         _bindThumbs: function () {
             var _this = this;
 
-            this._$carousel.on('click.threeThumbsCarousel', '.js-carousel__thumb', function () {
+            this._$carousel.on('click.threeThumbsCarousel', '.js-carousel__thumb', function (e) {
                 var $this = $(this);
-                var $preview = $this.closest('.js-carousel__preview');
+                var $preview = $this.closest('.js-carousel__item');
                 var index = $preview.index();
                 _this.switchThumb(index);
+
+                e.preventDefault();
             });
         },
 
@@ -85,6 +90,7 @@ define([
         },
 
         /**
+         * @param {Number} count
          * @private
          */
         _buildDots: function (count) {
@@ -112,15 +118,16 @@ define([
         switchThumb: function (index) {
             this._selectThumb(index);
             this._moveThumbs(index);
-
+            this._setImage(index);
             this._selectDot(index);
         },
 
         /**
+         * @param {Number} index
          * @private
          */
         _selectThumb: function (index) {
-            var $previews = this._$carousel.find('.js-carousel__preview');
+            var $previews = this._$carousel.find('.js-carousel__item');
 
             if ($previews.length > 0) {
                 $previews.removeClass('_state_current');
@@ -129,6 +136,27 @@ define([
         },
 
         /**
+         * @param {String} image
+         * @private
+         */
+        _setImageBackground: function (image) {
+            var url = 'url(' + image + ')';
+            this._$image[0].style.backgroundImage = url;
+        },
+
+        /**
+         * @param {Number} index
+         * @private
+         */
+        _setImage: function (index) {
+            var $previews = this._$carousel.find('.js-carousel__thumb');
+            var image = $($previews[index]).attr('href');
+
+            this._setImageBackground(image);
+        },
+
+        /**
+         * @param {Number} index
          * @private
          */
         _selectDot: function (index) {
@@ -141,13 +169,14 @@ define([
         },
 
         /**
+         * @param {Number} index
          * @private
          */
         _moveThumbs: function (index) {
             var margin;
             var width;
             var $carousel = this._$carousel;
-            var $previews = $carousel.find('.js-carousel__preview');
+            var $previews = $carousel.find('.js-carousel__item');
             var previewsLength = $previews.length;
 
             if (
@@ -180,7 +209,7 @@ define([
          * @public
          */
         update: function () {
-            var $previews = this._$carousel.find('.js-carousel__preview');
+            var $previews = this._$carousel.find('.js-carousel__item');
             var previewsLength = $previews.length;
 
             this._buildDots(previewsLength);
@@ -194,7 +223,6 @@ define([
          * @public
          */
         destroy: function () {
-            console.log('destroy');
             this._$block.removeData('three-thumbs-carousel');
 
             // Select first item

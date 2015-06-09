@@ -33,7 +33,7 @@ requirejs([
             if (_.isNumber(previewsLength) && previewsLength > 0) {
                 template = _.template($('#preview-template').html());
                 _.times(previewsLength, function (pk) {
-                    $fixtures.find('.js-carousel__previews').append(template({
+                    $fixtures.find('.js-carousel__thumbs').append(template({
                         pk: pk,
                     }));
                 });
@@ -61,7 +61,7 @@ requirejs([
                 assert.isDefined(m);
             });
 
-            it('should have block', function () {
+            it('should have `_$block`', function () {
                 var m = module();
                 assert.isDefined(m._$block[0]);
             });
@@ -74,10 +74,15 @@ requirejs([
                 assert.equal(m._$block.data('three-thumbs-carousel'), m);
             });
 
+            it('should have `_$image`', function () {
+                var m = module();
+                assert.isDefined(m._$image[0]);
+            });
+
             it('should have `_$carousel`', function () {
                 var m = module();
                 assert.isDefined(m._$carousel[0]);
-                assert.isTrue(m._$carousel.hasClass('carousel__previews'));
+                assert.isTrue(m._$carousel.hasClass('js-carousel__thumbs'));
             });
         });
 
@@ -85,10 +90,40 @@ requirejs([
             it('should bind click on thumbs', function () {
                 var m = module({}, 5);
                 sinon.spy(m, 'switchThumb');
-                var $previews = $('#fixtures').find('.js-carousel__preview');
+                var $previews = $('#fixtures').find('.js-carousel__item');
                 $($previews[3]).find('.js-carousel__thumb').trigger('click');
                 assert.isTrue(m.switchThumb.calledOnce);
                 assert.equal(m.switchThumb.getCall(0).args[0], 3);
+            });
+
+            it('should preventDefault', function () {
+                var m = module({}, 5);
+                var e = sinon.spy($.Event.prototype, 'preventDefault');
+                var $previews = $('#fixtures').find('.js-carousel__item');
+                $($previews[3]).find('.js-carousel__thumb').trigger('click');
+                assert.isTrue(e.calledOnce);
+                e.restore();
+            });
+        });
+
+        describe('_setImageBackground', function () {
+            it('should set background image', function () {
+                var m = module();
+                var $image = $('#fixtures').find('.js-carousel__image');
+                assert.isDefined($image[0]);
+                assert.equal($image.css('backgroundImage'), 'none');
+                m._setImageBackground('foo.jpg');
+                assert.isTrue(/foo\.jpg/.test($image.css('backgroundImage')));
+            });
+        });
+
+        describe('_setImage', function () {
+            it('should set current carousel image', function () {
+                var m = module({}, 2);
+                sinon.spy(m, '_setImageBackground');
+                m._setImage(1);
+                assert.isTrue(m._setImageBackground.calledOnce);
+                assert.equal(m._setImageBackground.getCall(0).args[0], '1.jpg');
             });
         });
 
@@ -108,6 +143,13 @@ requirejs([
                 assert.isTrue(m._moveThumbs.calledOnce);
             });
 
+            it('should fire `_setImage`', function () {
+                var m = module({}, 2);
+                sinon.spy(m, '_setImage');
+                m.switchThumb(1);
+                assert.isTrue(m._setImage.calledOnce);
+            });
+
             it('should not throw error if no `index` item', function () {
                 var m = module();
                 assert.doesNotThrow(function () {
@@ -120,15 +162,15 @@ requirejs([
             it('should select thumb with `index` from attribute', function () {
                 var m = module({}, 2);
                 m.switchThumb(1);
-                var $el = $(m._$carousel.find('.js-carousel__preview')[1]);
+                var $el = $(m._$carousel.find('.js-carousel__item')[1]);
                 assert.isTrue($el.hasClass('_state_current'));
             });
 
             it('should deselect other thumbs', function () {
                 var m = module({}, 2);
-                m._$carousel.find('.js-carousel__preview').addClass('_state_current');
+                m._$carousel.find('.js-carousel__item').addClass('_state_current');
                 m.switchThumb(1);
-                var $el = m._$carousel.find('.js-carousel__preview._state_current');
+                var $el = m._$carousel.find('.js-carousel__item._state_current');
                 assert.equal($el.length, 1);
             });
 
@@ -159,7 +201,7 @@ requirejs([
                 var m = module({}, 1);
                 var $fixtures = $('#fixtures');
                 assert.equal(m._$carousel.css('margin-left'), '0px');
-                $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html())({pk: 1}));
+                $fixtures.find('.js-carousel__thumbs').append(_.template($('#preview-template').html())({pk: 1}));
                 m._moveThumbs(1);
                 assert.equal(m._$carousel.css('margin-left'), '0px');
             });
@@ -176,9 +218,9 @@ requirejs([
             it('should select first item if previous selected has been removed', function () {
                 var m = module();
                 var $fixtures = $('#fixtures');
-                $fixtures.find('.js-carousel__previews').append(_.template($('#preview-template').html())({pk: 0}));
+                $fixtures.find('.js-carousel__thumbs').append(_.template($('#preview-template').html())({pk: 0}));
                 m.update();
-                assert.equal($fixtures.find('.js-carousel__preview._state_current').length, 1);
+                assert.equal($fixtures.find('.js-carousel__item._state_current').length, 1);
             });
         });
 
@@ -196,7 +238,7 @@ requirejs([
 
             it('should reset carousel margin', function () {
                 var m = module({}, 5);
-                var $carousel = $('#fixtures .js-carousel__previews');
+                var $carousel = $('#fixtures .js-carousel__thumbs');
                 $carousel.css('margin-left', '-100500px');
                 assert.equal($carousel.css('margin-left'), '-100500px');
                 m.destroy();
@@ -205,26 +247,26 @@ requirejs([
 
             it('should reset carousel margin when items centered', function () {
                 var m = module({}, 2);
-                var $carousel = $('#fixtures .js-carousel__previews');
+                var $carousel = $('#fixtures .js-carousel__thumbs');
                 m.destroy();
                 assert.equal($carousel.css('margin-left'), '0px');
             });
 
             it('should select first thumb', function () {
                 var m = module({}, 5);
-                var $previews = $('#fixtures').find('.js-carousel__preview');
+                var $previews = $('#fixtures').find('.js-carousel__item');
                 $previews.addClass('_state_current');
-                assert.equal($('#fixtures').find('.js-carousel__preview._state_current').length, 5);
+                assert.equal($('#fixtures').find('.js-carousel__item._state_current').length, 5);
                 m.destroy();
-                assert.equal($('#fixtures').find('.js-carousel__preview._state_current').length, 1);
-                assert.isTrue($($('#fixtures').find('.js-carousel__preview')[0]).hasClass('_state_current'));
+                assert.equal($('#fixtures').find('.js-carousel__item._state_current').length, 1);
+                assert.isTrue($($('#fixtures').find('.js-carousel__item')[0]).hasClass('_state_current'));
             });
 
             it('should unbind click event', function () {
                 var m = module({}, 5);
                 m.destroy();
                 sinon.spy(m, 'switchThumb');
-                var $previews = $('#fixtures').find('.js-carousel__preview');
+                var $previews = $('#fixtures').find('.js-carousel__item');
                 $($previews[3]).find('.js-carousel__thumb').trigger('click');
                 assert.isFalse(m.switchThumb.called);
             });

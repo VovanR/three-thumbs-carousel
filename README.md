@@ -11,9 +11,11 @@
 ### Block structure
 ```jade
 .carousel.js-carousel
-    .carousel__previews.js-carousel__previews
-        span.carousel__preview.js-carousel__preview
-            span.carousel__thumb.js-carousel__thumb
+    .carousel__image.js-carousel__image
+    .carousel__thumbs.js-carousel__thumbs
+        span.carousel__item.js-carousel__item
+            a.carousel__thumb.js-carousel__thumb(href="foo-big.jpg")
+                img.carousel__preview(src="foo-min.jpg")
     .carousel__dots.js-carousel__dots
         span.carousel__dot.js-carousel__dot
 ```
