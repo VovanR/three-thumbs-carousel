@@ -38,7 +38,7 @@ define([
          * @private
          */
         _init: function () {
-            console.info('RoutesThumbsCarousel init');
+            console.info('ThreeThumbsCarousel init');
 
             this._$block.data('three-thumbs-carousel', this);
 
