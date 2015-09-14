@@ -4,7 +4,7 @@
 
 define([
     'jquery',
-    '../../index',
+    'three-thumbs-carousel',
 
     // nothing returns
 ], function (
@@ -17,9 +17,7 @@ define([
     var App;
 
     App = function () {
-        this._threeThumbsCarousel = null;
-
-        this._init();
+        this._initialize();
     };
 
     App.prototype = {
@@ -28,7 +26,7 @@ define([
          *
          * @private
          */
-        _init: function () {
+        _initialize: function () {
             console.info('App init');
 
             this._threeThumbsCarousel = new ThreeThumbsCarousel({
@@ -37,6 +35,6 @@ define([
         },
     };
 
-    return App;
+    return new App();
 
 });
