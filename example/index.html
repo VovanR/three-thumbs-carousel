@@ -31,13 +31,13 @@
     background-color: green;
 }
 
-.carousel__previews {
+.carousel__thumbs {
     height: 54px;
     white-space: nowrap;
     text-align: center;
 }
 
-.carousel__preview {
+.carousel__item {
     display: inline-block;
     vertical-align: middle;
     white-space: normal;
@@ -51,15 +51,15 @@
     box-shadow: inset 0 0 0 1px green;
 }
 
-.carousel__preview + .carousel__preview {
+.carousel__item + .carousel__item {
     margin-left: 1px;
 }
 
-.carousel__preview._state_current {
+.carousel__item._state_current {
     background-color: lime;
 }
 
-.carousel__preview._state_current .carousel__image {
+.carousel__item._state_current .carousel__image {
     display: block;
 }
 
@@ -104,24 +104,25 @@
         <![endif]-->
 
 <div class="carousel js-carousel">
-    <div class="carousel__previews js-carousel__previews">
-        <span class="carousel__preview js-carousel__preview _state_current">
+    <div class="carousel__image js-carousel__image"></div>
+    <div class="carousel__thumbs js-carousel__thumbs">
+        <span class="carousel__item js-carousel__item _state_current">
             <span class="carousel__image">0</span>
             <span class="carousel__thumb js-carousel__thumb">0</span>
         </span><!--
-        --><span class="carousel__preview js-carousel__preview">
+        --><span class="carousel__item js-carousel__item">
             <span class="carousel__image">1</span>
             <span class="carousel__thumb js-carousel__thumb">1</span>
         </span><!--
-        --><span class="carousel__preview js-carousel__preview">
+        --><span class="carousel__item js-carousel__item">
             <span class="carousel__image">2</span>
             <span class="carousel__thumb js-carousel__thumb">2</span>
         </span><!--
-        --><span class="carousel__preview js-carousel__preview">
+        --><span class="carousel__item js-carousel__item">
             <span class="carousel__image">3</span>
             <span class="carousel__thumb js-carousel__thumb">3</span>
         </span><!--
-        --><span class="carousel__preview js-carousel__preview">
+        --><span class="carousel__item js-carousel__item">
             <span class="carousel__image">4</span>
             <span class="carousel__thumb js-carousel__thumb">4</span>
         </span>
@@ -140,7 +141,7 @@
             require.config({
                 paths: {
                     jquery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min',
-                    'three-thumbs-carousel': 'https://raw.githubusercontent.com/VovanR/three-thumbs-carousel/master/index',
+                    'three-thumbs-carousel': 'https://rawgit.com/VovanR/three-thumbs-carousel/master/index',
                     app: './js/app',
                 },
             });
